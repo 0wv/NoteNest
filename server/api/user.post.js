@@ -16,15 +16,13 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (
-      !validator.isStrongPassword(body.password, {
+    if (!validator.isStrongPassword(body.password, {
         minLength: 8,
         minLowercase: 0,
         minUppercase: 0,
         minNumbers: 0,
         minSymbols: 0,
-      })
-    ) {
+      })) {
       throw createError({
         statusCode: 400,
         message: "Password needs to be 8 or more characters in length.",
@@ -43,9 +41,9 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+    const decoded = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
-    setCookie(event, 'NoteNestJWT', token)
+    setCookie(event, 'NoteNestJWT', decoded)
 
     return { data: "{+} Successfully Stored Data" }; // what is being returned to the user
   } catch (error) {
