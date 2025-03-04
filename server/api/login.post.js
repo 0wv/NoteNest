@@ -47,8 +47,6 @@ export default defineEventHandler(async (event) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
     setCookie(event, 'NoteNestJWT', token)
-
-    return { data: "{+} Successfully Stored Data" }; // what is being returned to the user
   } catch (error) {
     if (error.code === "P2002") {
       throw createError({

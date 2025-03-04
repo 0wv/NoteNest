@@ -23,7 +23,7 @@
         <!-- /inputs -->
         <!-- sign up button-->
         <div class="flex">
-          <button class="hover:scale-102 transform transition-all cursor-pointer w-full mt-6 bg-[#FFAC00] rounded-full px-4 py-2 text-sm font-bold text-zinc-900 flex justify-center items-center space-x-2">
+          <button class="reglog hover:scale-102 transform transition-all cursor-pointer w-full mt-6 bg-[#FFAC00] rounded-full px-4 py-2 text-sm font-bold text-zinc-900 flex justify-center items-center space-x-2">
              <span>Log in</span>
            <ArrowRight /></button>
         </div>
