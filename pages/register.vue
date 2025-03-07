@@ -7,7 +7,7 @@
         Sign up for free today
       </h1>
       <p class="text-zinc-300 text-sm mt-0.5">
-        Already registered? <nuxt-link to="/login" class="font-bold text-[#FFAC00] underline">Log in</nuxt-link> to your account
+        Already registered? <nuxt-link to="/login" class="cursor-pointer font-bold text-[#FFAC00] underline">Log in</nuxt-link> to your account
       </p>
       <!-- inputs -->
       <form @submit.prevent="submit"> <!-- .prevent stops page from refreshing -->

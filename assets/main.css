@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
 .reglog:active {
-    transform: scale(0.95);
+  transform: scale(0.95);
 }
+
+/* .bg-design {
+  background: rgb(12, 10, 10);
+  background: linear-gradient(
+    75deg,
+    rgba(12, 10, 10, 1) 0%,
+    rgb(102, 89, 50) 81%,
+    rgb(114, 97, 40) 100%
+  );
+} */

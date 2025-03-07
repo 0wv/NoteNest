@@ -7,7 +7,7 @@
             Log in to your account
         </h1>
         <p class="text-zinc-300 text-sm mt-0.5">
-            Don't have an account? <nuxt-link to="/register" class="font-bold text-[#FFAC00] underline">Sign up</nuxt-link> for one.
+            Don't have an account? <nuxt-link to="/register" class="cursor-pointer font-bold text-[#FFAC00] underline">Sign up</nuxt-link> for one.
         </p>
         <!-- inputs -->
         <form @submit.prevent="submit"> <!-- .prevent stops page from refreshing -->
