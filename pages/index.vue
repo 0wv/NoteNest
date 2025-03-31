@@ -6,7 +6,7 @@
       <!-- "Today" container -->
       <div>
         <p class="text-s font-medium text-[#C2C2C2] mt-12 mb-4">Today</p>
-        <div class="ml-2 space-y-2">
+        <div class="ml-2 space-y-2 font-golos">
           <div
             v-for="note in todaysNotes"
             class="p-4 rounded-lg cursor-pointer"
@@ -65,7 +65,7 @@
         </div>
       </div>
       <!-- "Yesterday" container-->
-       <!-- "Everything before yesterday" container-->
+      <!-- "Everything before yesterday" container-->
       <div>
         <p class="text-s font-medium text-[#C2C2C2] mt-12 mb-2">Earlier</p>
         <div class="ml-2 space-y-2">
@@ -99,7 +99,7 @@
     </div>
     <!-- /sidebar -->
     <!-- right section-->
-    <div class="bg-design w-full">
+    <div class="bg-design w-full flex flex-col">
       <!-- Top Buttons-->
       <div class="w-full flex justify-between items-start p-8">
         <button
@@ -113,12 +113,18 @@
       </div>
       <!-- /Top Buttons-->
       <!-- Middle Text -->
-      <div class="max-w-[437px] mx-auto">
+      <div class="max-w-[437px] mx-auto w-full flex-grow flex flex-col">
         <!-- mx-auto adds margins left and right sides to make it in the middle? -->
-        <p class="text-[#929292] font-playfair">
+        <p class="text-[#929292] font-playfair text-2xl">
           {{ new Date(selectedNote.updatedAt).toLocaleDateString() }}
         </p>
-        <p class="text-[#D4D4D4] my-4 font-playfair">{{ selectedNote.text }}</p>
+        <textarea
+          v-model="updatedNote"
+          name="note"
+          id="note"
+          class="text-[#D4D4D4] my-4 font-golos text-1xl w-full bg-transparent focus:outline-none resize-none flex-grow"
+          @input="debouncedFn"
+        ></textarea>
       </div>
       <!-- /Middle Text -->
     </div>
@@ -127,12 +133,30 @@
 </template>
 
 <script setup>
+  const updatedNote = ref("");
   const notes = ref([]);
   const selectedNote = ref({});
 
   definePageMeta({
     middleware: ["auth"], // run whatever is in auth.js BEFORE we open index.vue
   });
+
+  const debouncedFn = useDebounceFn(async () => {
+    await updateNote()
+  }, 1000) // complete all actions within 1 second.
+
+  async function updateNote() {
+    try {
+      await $fetch(`/api/notes/${selectedNote.value.id}`, {
+        method: "PATCH",
+        body: {
+          updatedNote: updatedNote.value,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const todaysNotes = computed(() => {
     return notes.value.filter((note) => {
@@ -154,7 +178,10 @@
     yesterday.setDate(yesterday.getDate() - 1);
     return notes.value.filter((note) => {
       const noteDate = new Date(note.updatedAt);
-      return noteDate < yesterday && noteDate.toDateString() !== yesterday.toDateString();
+      return (
+        noteDate < yesterday &&
+        noteDate.toDateString() !== yesterday.toDateString()
+      );
     });
   });
 
@@ -165,5 +192,7 @@
     if (notes.value.length > 0) {
       selectedNote.value = notes.value[0];
     }
+
+    updatedNote.value = selectedNote.value.text;
   });
 </script>

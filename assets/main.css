@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap');
 @import "tailwindcss";
+@theme {
+  --font-golos: "Golos Text", sans-serif;
+}
 
 .reglog:active {
   transform: scale(0.95);
